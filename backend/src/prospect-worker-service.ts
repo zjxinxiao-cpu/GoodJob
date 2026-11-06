@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { createAiSearchProvider } from "./ai-search-provider.js";
 import { callAiModelWithWebSearch } from "./ai-model-runtime.js";
 import { aiLeadFinderReadiness, aiWebSearchPolicy } from "./ai-web-search-policy.js";
+import { pickAiConfigForMarket } from "./ai-market-routing.js";
 import { getProvider } from "./lead-providers.js";
 import { aiWebsiteCitationsToProviderRecords } from "./prospect-ai-website-discovery.js";
 import { BullMqProspectQueueBackend } from "./prospect-bullmq-backend.js";
@@ -79,22 +80,26 @@ export class ProspectWorkerService {
         store: this.store,
         resolveProvider: (request) => {
           if (request.providerCode !== "ai_search") return undefined;
-          const config = this.store.aiModelConfigs
-            .filter((item) =>
-              item.teamId === request.teamId
-              && item.ownerId === request.ownerId
-              && item.enabled
-              && item.useLeadFinder
-              && Boolean(item.apiKey)
-              && aiLeadFinderReadiness(
-                item,
-                externalWebsiteSearchReady(request.teamId, request.ownerId)
-              ).ready
-            )
-            .sort((left, right) =>
-              new Date(right.updatedAt).getTime()
-              - new Date(left.updatedAt).getTime()
-            )[0];
+          const readyConfigs = this.store.aiModelConfigs.filter((item) =>
+            item.teamId === request.teamId
+            && item.ownerId === request.ownerId
+            && item.enabled
+            && item.useLeadFinder
+            && Boolean(item.apiKey)
+            && aiLeadFinderReadiness(
+              item,
+              externalWebsiteSearchReady(request.teamId, request.ownerId)
+            ).ready
+          );
+          const run = this.store.prospectSearchRuns.find((item) =>
+            item.id === request.runId
+            && item.teamId === request.teamId
+            && item.ownerId === request.ownerId
+          );
+          const config = pickAiConfigForMarket(readyConfigs, {
+            useCase: "leadFinder",
+            countryOrMarket: (run?.executionSnapshot.resolvedQuery.countries || []).join(",")
+          });
           return config
             ? {
                 provider: createAiSearchProvider(config),

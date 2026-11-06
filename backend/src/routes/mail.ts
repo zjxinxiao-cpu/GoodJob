@@ -1607,7 +1607,7 @@ export function registerMailRoutes(app: Express) {
     }
     const companyProfile = companyProfileForTeam(req.user!.teamId);
     const readiness = developmentEmailReadiness(user, companyProfile);
-    const config = getAiConfig(req.user!, "emailDraft");
+    const config = getAiConfig(req.user!, "emailDraft", entity.country);
     const aiReady = Boolean(config?.enabled && config.apiKey);
     const engineSettings = await readTeamAiEngineSettings(req.user!.teamId);
     const emailSource = resolveEngineSource(body.source, engineSettings.emailSource, EMAIL_ENGINE_SOURCES);

@@ -1096,7 +1096,7 @@ export function registerCustomersRoutes(app: Express) {
     const transcript = String(req.body?.transcript || "").trim();
     if (!transcript) { res.status(400).json({ message: "转写内容为空" }); return; }
 
-    const config = getAiConfig(req.user!, "emailDraft");
+    const config = getAiConfig(req.user!, "emailDraft", customer.country);
     if (!config || !config.apiKey) {
       const activity = {
         id: `ca_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,

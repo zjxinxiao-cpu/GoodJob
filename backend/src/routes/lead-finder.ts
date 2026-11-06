@@ -1427,7 +1427,8 @@ export function registerLeadFinderRoutes(app: Express) {
 
     // AI 搜索：用「AI 模型配置」里已启用并勾选自动获客的模型直接生成候选公司
     if (wantsAiSearch) {
-      const aiSearchConfig = getAiConfig(user, "leadFinder");
+      const aiSearchConfig = getAiConfig(user, "leadFinder", query.countries);
+      const searchStatus = aiSearchStatus(user, query.countries);
       const catalog = providerCatalogByCode("ai_search");
       if (!catalog) {
         recordProviderPreflightFailure(user, runId, "ai_search", "PROVIDER_CATALOG_MISSING", "search_preflight");
@@ -1441,7 +1442,7 @@ export function registerLeadFinderRoutes(app: Express) {
           retryable: false,
           retryAfterAt: null
         });
-      } else if (aiSearchConfig?.enabled && aiSearchConfig.apiKey && aiSearchConfig.useLeadFinder && aiSearchStatus(user).ready) {
+      } else if (aiSearchConfig?.enabled && aiSearchConfig.apiKey && aiSearchConfig.useLeadFinder && searchStatus.ready) {
         try {
           const provider = createAiSearchProvider(aiSearchConfig);
           const result = await executeProviderSearch({
@@ -1499,7 +1500,7 @@ export function registerLeadFinderRoutes(app: Express) {
           });
         }
       } else {
-        const providerStatus = aiSearchStatus(user);
+        const providerStatus = searchStatus;
         const policy = aiSearchConfig ? aiWebSearchPolicy(aiSearchConfig) : null;
         const errorCode: ProviderErrorCode = !aiSearchConfig || !aiSearchConfig.apiKey || !aiSearchConfig.enabled || !aiSearchConfig.useLeadFinder
           ? "PROVIDER_CONNECTION_INVALID"

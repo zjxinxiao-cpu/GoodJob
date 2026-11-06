@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { canSeeOwner, isPlatformIdentity } from "./auth.js";
 import { callAiModel, extractJsonObject } from "./ai-model-runtime.js";
+import { coherentMarketHint, pickAiConfigForMarket } from "./ai-market-routing.js";
 import { getProvider } from "./lead-providers.js";
 import {
   createProspectRun,
@@ -740,15 +741,16 @@ async function startRound(
   // 首轮先按用户已经确认的规则立即入队，避免可选 AI 扩词阻塞任务启动。
   // 从第二轮开始，AI 会结合真实覆盖缺口继续扩展查询。
   if (!deepTask && roundNo > 1 && mission.aiMode === "auto") {
-    const config = store.aiModelConfigs
-      .filter((item) =>
-        item.ownerId === mission.ownerId
-        && item.teamId === mission.teamId
-        && item.enabled
-        && item.apiKey
-        && item.useLeadFinder !== false
-      )
-      .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))[0];
+    const ownedConfigs = store.aiModelConfigs.filter((item) =>
+      item.ownerId === mission.ownerId && item.teamId === mission.teamId
+    );
+    const picked = pickAiConfigForMarket(ownedConfigs, {
+      useCase: "leadFinder",
+      countryOrMarket: coherentMarketHint((plan.resolvedQuery.countries || []).join(","))
+    });
+    const config = picked && picked.enabled && picked.apiKey && picked.useLeadFinder !== false
+      ? picked
+      : undefined;
     if (config) {
       appendEvent(store, mission, "ai_planning_started", `AI 正在结合第 ${roundNo - 1} 轮结果规划第 ${roundNo} 轮查询`, {
         roundNo,

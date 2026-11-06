@@ -1022,7 +1022,7 @@ export function registerProspectListRoutes(app: Express) {
         async (current) => {
           await persistCandidateChanges(store, [current], false);
         },
-        { extractPublicContacts: websiteContactAiExtractor(req.user!) }
+        { extractPublicContacts: websiteContactAiExtractor(req.user!, candidate.country) }
       );
       res.setHeader("Cache-Control", "no-store");
       res.status(result.replayed ? 200 : 202).json({
