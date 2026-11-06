@@ -37,6 +37,7 @@ import {
   callAiModelWithWebSearch,
   extractJsonObject
 } from "./ai-model-runtime.js";
+import { pickAiConfigForMarket, coherentMarketHint } from "./ai-market-routing.js";
 import "./customer-intake-parse.js"; // 保持模块加载顺序与拆分前一致
 import "./whatsapp-followup-sync.js"; // 保持模块加载顺序与拆分前一致
 import "./office-document-text.js"; // 保持模块加载顺序与拆分前一致
@@ -2056,7 +2057,7 @@ async function ensureBackgroundResearchWebsiteProbe(
   try {
     await queueWebsiteProbe(getStore(), candidate, user.id, async (current) => {
       await persistCandidateChanges(getStore(), [current], false);
-    }, { extractPublicContacts: websiteContactAiExtractor(user) });
+    }, { extractPublicContacts: websiteContactAiExtractor(user, candidate.country) });
     return {
       providerId: "controlled_website",
       providerName: "官网公开资料核验",
@@ -2168,8 +2169,9 @@ export async function buildBackgroundResearch(
     ? store.customerIntelligenceSuggestions.filter((item) => item.customerId === customer.id && item.teamId === teamId && item.ownerId === ownerId)
     : [];
   const company = lead?.company || customer?.company || prospect!.company;
-  const country = researchText(lead?.country || customer?.country || prospect?.country);
-  const config = getAiConfig(user, "scoring");
+  const rawCountry = String(lead?.country || customer?.country || prospect?.country || "").trim();
+  const country = researchText(rawCountry);
+  const config = getAiConfig(user, "scoring", rawCountry);
   const candidate = candidates[0];
   const business = researchText(candidate?.business || lead?.remark || deals[0]?.product, "尚无明确业务资料");
   const products = [
@@ -3428,7 +3430,7 @@ async function writeOutreachLetter(options: {
     };
   }
 
-  const config = getAiConfig(options.owner, "emailDraft");
+  const config = getAiConfig(options.owner, "emailDraft", options.recipient.country || options.recipient.market);
   if (!config?.enabled || !config.apiKey) return null;
   try {
     const parsed = extractJsonObject(await callAiModel(config, buildDevelopmentEmailPrompt(brief), 12000)) as Record<string, unknown>;
@@ -3796,7 +3798,7 @@ async function buildAgentDevelopmentEmail(actor: { id: string }, input: Record<s
     signature,
     profile.website ? `Website: ${profile.website}` : ""
   ].filter(Boolean).join("\n");
-  const config = getAiConfig(session, "emailDraft");
+  const config = getAiConfig(session, "emailDraft", entity.country);
   if (!requestedSubject && !requestedBody && config?.enabled && config.apiKey) {
     try {
       const prompt = [
@@ -5417,7 +5419,7 @@ async function executeContactEnrichment(
   const current = candidate.contactEnrichmentAttempts?.[0];
   if (!force && current && ["queued", "running"].includes(current.status)) return;
   const providers = contactEnrichmentProviders(user);
-  const webSearchConfig = getAiConfig(user, "leadFinder");
+  const webSearchConfig = getAiConfig(user, "leadFinder", candidate.country);
   const webSearchPolicy = webSearchConfig ? aiWebSearchPolicy(webSearchConfig) : null;
   const webSearchReady = Boolean(
     webSearchConfig?.enabled
@@ -5656,7 +5658,7 @@ async function executeContactEnrichment(
         websiteContactSourceProgress(latestCandidate, websiteAttempt.id);
         await persistCandidateChanges(store, [latestCandidate], false);
       },
-      { extractPublicContacts: websiteContactAiExtractor(user) }
+      { extractPublicContacts: websiteContactAiExtractor(user, queuedCandidate.country) }
     );
     if (["completed", "failed"].includes(queued.attempt.status)) {
       const completedCandidate = store.websiteOpportunities.find((item) =>
@@ -6179,11 +6181,11 @@ function providerStatusFor(user: SessionUser, provider: LeadProvider) {
 }
 
 // AI 搜索作为一种数据源：不需要独立 API Key，直接复用「AI 模型配置」里已启用且勾选自动获客的模型
-export function aiSearchStatus(user: SessionUser) {
+export function aiSearchStatus(user: SessionUser, countryOrMarket?: string | null) {
   const configured = getAiConfigs(user).find((item) =>
     item.enabled && Boolean(item.apiKey)
   );
-  const config = getAiConfig(user, "leadFinder");
+  const config = getAiConfig(user, "leadFinder", countryOrMarket);
   const externalWebsiteProviders = LEAD_PROVIDERS
     .filter((provider) => ["brave", "serper", "serpapi", "google_places"].includes(provider.id))
     .map((provider) => providerStatusFor(user, provider))
@@ -6645,16 +6647,20 @@ export function configSupportsUseCase(config: AiModelConfig, useCase?: AiUseCase
   return Boolean(config[map[useCase]]);
 }
 
-export function getAiConfig(user: SessionUser, useCase?: AiUseCase) {
+export function getAiConfig(user: SessionUser, useCase?: AiUseCase, countryOrMarket?: string | null) {
   const configs = getAiConfigs(user);
+  // 有明确且一致的国家/市场时按国内外选模型；没有提示时保持原先的启用顺序。
+  if (coherentMarketHint(countryOrMarket)) {
+    return pickAiConfigForMarket(configs, { useCase, countryOrMarket });
+  }
   return configs.find((item) => item.enabled && item.apiKey && configSupportsUseCase(item, useCase))
     || configs.find((item) => configSupportsUseCase(item, useCase))
     || configs[0]
     || null;
 }
 
-export function websiteContactAiExtractor(user: SessionUser): WebsiteContactAiExtractor | undefined {
-  const config = getAiConfig(user, "websiteParse");
+export function websiteContactAiExtractor(user: SessionUser, countryOrMarket?: string | null): WebsiteContactAiExtractor | undefined {
+  const config = getAiConfig(user, "websiteParse", countryOrMarket);
   if (!config?.enabled || !config.apiKey || !config.baseUrl || !config.model) return undefined;
   return (input) => extractWebsitePublicContactsWithAi(config, input);
 }
