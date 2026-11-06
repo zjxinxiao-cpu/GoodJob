@@ -382,7 +382,7 @@ function lfindPrompt(input: z.infer<typeof leadSearchSchema>, user: SessionUser)
     }));
   return [
     "Use $lfind.",
-    "Run a GoodJob Lfind public-source overseas B2B prospect discovery task.",
+    "Run a 普禾 Lfind public-source overseas B2B prospect discovery task.",
     "Return only the final JSON object following goodjob-lfind-v1. No markdown fences, no explanations after JSON.",
     "",
     "Execution discipline (important):",
@@ -391,7 +391,7 @@ function lfindPrompt(input: z.infer<typeof leadSearchSchema>, user: SessionUser)
     "- Spend at most 2 minutes total on browser troubleshooting of any kind. Guard the total budget: finish within 25 minutes and start writing the final JSON by minute 22 at the latest.",
     "- If time runs short, return fewer candidates (even zero) with a valid JSON object and explain in summary/failures. An empty opportunities array with valid schema is a successful outcome; a timeout with no output is not.",
     "",
-    "GoodJob search request:",
+    "普禾 search request:",
     JSON.stringify({
       goal: input.goal,
       productKeywords: input.productKeywords,
@@ -421,7 +421,7 @@ async function lfindRunnerPlan(user: SessionUser, preferredAdapter: "workbuddy" 
   if (!service) return {
     configured: false,
     message: "当前数据库运行模式未启用本地 Runner 服务",
-    suggestion: "请使用 MySQL 版服务，并在集成中心完成 GoodJob Runner 配对。",
+    suggestion: "请使用 MySQL 版服务，并在集成中心完成普禾 Runner 配对。",
     service: null,
     runner: null
   };
@@ -445,7 +445,7 @@ async function lfindRunnerPlan(user: SessionUser, preferredAdapter: "workbuddy" 
     } : {
       configured: false,
       message: "没有可用的在线 CLI Runner",
-      suggestion: "请在集成中心启动并配对 GoodJob Runner，确认本机 CLI 显示在线，并授权一个工作目录。",
+      suggestion: "请在集成中心启动并配对普禾 Runner，确认本机 CLI 显示在线，并授权一个工作目录。",
       service,
       runner: null
     };

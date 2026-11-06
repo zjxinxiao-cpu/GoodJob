@@ -342,7 +342,7 @@ async function executeDatabaseBackup(jobId: string, allowedTables?: string[]) {
     file = createWriteStream(partialPath, { mode: 0o600 });
     gzip.pipe(file);
     const fileFinished = finished(file);
-    await writeStream(gzip, `-- GoodJob CRM database backup\n-- Created at ${new Date().toISOString()}\nSET FOREIGN_KEY_CHECKS=0;\n`);
+    await writeStream(gzip, `-- 普禾业务 database backup\n-- Created at ${new Date().toISOString()}\nSET FOREIGN_KEY_CHECKS=0;\n`);
     const binary = await dumpBinary();
     const common = [
       `--host=${connection.host}`,
@@ -369,7 +369,7 @@ async function executeDatabaseBackup(jobId: string, allowedTables?: string[]) {
       const before = await stat(partialPath).catch(() => ({ size: 0 }));
       tableStats[item.table] = { ...tableStats[item.table]!, status: "running" };
       await updateJob(pool, jobId, { phase: "data", currentTable: item.table, tableStats }, maintenanceEvent("table", `开始备份 ${item.table}`, { table: item.table }));
-      await writeStream(gzip, `\n-- GoodJob table: ${item.table}\n`);
+      await writeStream(gzip, `\n-- 普禾业务 table: ${item.table}\n`);
       await runDump(jobId, binary, [...common, "--no-create-info", "--skip-triggers", connection.database, item.table], connection.password, gzip);
       const after = await stat(partialPath).catch(() => ({ size: before.size }));
       tableStats[item.table] = { ...tableStats[item.table]!, status: "completed", bytes: Math.max(0, after.size - before.size) };

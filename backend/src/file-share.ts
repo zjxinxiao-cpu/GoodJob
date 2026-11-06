@@ -83,7 +83,7 @@ export const SHARE_BLOCK_TEXT: Record<Exclude<ShareBlockReason, "">, string> = {
  */
 export function buildWatermarkText(input: { customerName?: string; sharerName?: string; token?: string; now?: Date }) {
   const date = (input.now || new Date()).toISOString().slice(0, 10);
-  const who = String(input.customerName || input.sharerName || "GoodJob").slice(0, 20);
+  const who = String(input.customerName || input.sharerName || "普禾").slice(0, 20);
   const mark = String(input.token || "").slice(0, 6);
   return mark ? `${who} · ${date} · ${mark}` : `${who} · ${date}`;
 }
@@ -218,7 +218,7 @@ function hasCjk(text: string) {
  * 没有中文字形时的降级文案：只留 ASCII（客户名多半是英文公司名，
  * token 前 6 位和日期本来就是 ASCII，倒查能力不丢），只把中文段去掉。
  */
-export function asciiWatermarkFallback(text: string, fallback = "GoodJob") {
+export function asciiWatermarkFallback(text: string, fallback = "Puhe") {
   const cleaned = String(text || "")
     .replace(/[^\x20-\x7e]+/gu, " ")
     .replace(/\s*·\s*/gu, " · ")

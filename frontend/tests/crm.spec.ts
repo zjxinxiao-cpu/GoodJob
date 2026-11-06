@@ -1756,7 +1756,7 @@ test.describe("GoodJob CRM prototype pages", () => {
     const downloadPromise = page.waitForEvent("download");
     await page.locator("#exportCustomersButton").click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toContain("GoodJob客户清单");
+    expect(download.suggestedFilename()).toContain("普禾客户清单");
     await expect(page.locator("#imports tbody")).toContainText("客户清单导出");
   });
 
@@ -3936,7 +3936,7 @@ test.describe("GoodJob CRM prototype pages", () => {
     const downloadPromise = page.waitForEvent("download");
     await page.locator("#reportExportButton").click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toContain("GoodJob-CRM");
+    expect(download.suggestedFilename()).toContain("普禾业务");
     const downloadPath = await download.path();
     expect(downloadPath).not.toBeNull();
     const exportText = await readFile(downloadPath!, "utf8");

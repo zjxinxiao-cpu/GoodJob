@@ -103,11 +103,11 @@ export const documentLetterheads: DocumentLetterhead[] = [];
 export const documentStamps: DocumentStamp[] = [];
 
 export const users: User[] = [
-  { id: "u_sales_shirley", name: "Shirley", email: "shirley@goodjob.com", password: "goodjob123", role: "sales", teamId: "europe", avatar: "SH", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Shirley", emailSignature: "Best regards,\\nShirley\\nGoodJob Sales Team" },
-  { id: "u_sales_mia", name: "Mia", email: "mia@goodjob.com", password: "goodjob123", role: "sales", teamId: "europe", avatar: "MI", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Mia", emailSignature: "Best regards,\\nMia\\nGoodJob Sales Team" },
-  { id: "u_manager_alex", name: "Alex", email: "alex@goodjob.com", password: "goodjob123", role: "manager", teamId: "europe", avatar: "AL", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Alex", emailSignature: "Best regards,\\nAlex\\nGoodJob Sales Team" },
-  { id: "u_admin", name: "Admin", email: "admin@goodjob.com", password: "goodjob123", role: "admin", teamId: "europe", avatar: "AD", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Admin", emailSignature: "GoodJob CRM Admin" },
-  { id: "u_super_admin", name: "Super Admin", email: "super@goodjob.com", password: "goodjob123", role: "super_admin", teamId: "all", avatar: "SA", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Super Admin", emailSignature: "GoodJob CRM" }
+  { id: "u_sales_shirley", name: "Shirley", email: "shirley@goodjob.com", password: "goodjob123", role: "sales", teamId: "europe", avatar: "SH", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Shirley", emailSignature: "Best regards,\\nShirley\\n普禾业务" },
+  { id: "u_sales_mia", name: "Mia", email: "mia@goodjob.com", password: "goodjob123", role: "sales", teamId: "europe", avatar: "MI", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Mia", emailSignature: "Best regards,\\nMia\\n普禾业务" },
+  { id: "u_manager_alex", name: "Alex", email: "alex@goodjob.com", password: "goodjob123", role: "manager", teamId: "europe", avatar: "AL", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Alex", emailSignature: "Best regards,\\nAlex\\n普禾业务" },
+  { id: "u_admin", name: "Admin", email: "admin@goodjob.com", password: "goodjob123", role: "admin", teamId: "europe", avatar: "AD", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Admin", emailSignature: "普禾业务" },
+  { id: "u_super_admin", name: "Super Admin", email: "super@goodjob.com", password: "goodjob123", role: "super_admin", teamId: "all", avatar: "SA", status: "active", authVersion: 1, outboundEmail: "", emailSenderName: "Super Admin", emailSignature: "普禾业务" }
 ];
 
 export const customers: Customer[] = [

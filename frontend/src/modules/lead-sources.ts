@@ -1135,7 +1135,7 @@ export function exportLeadFinderRows() {
   })));
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "智能搜客结果");
-  XLSX.writeFile(workbook, `GoodJob智能搜客结果-${Date.now()}.xlsx`);
+  XLSX.writeFile(workbook, `普禾智能搜客结果-${Date.now()}.xlsx`);
   toast("搜客结果已导出");
 }
 

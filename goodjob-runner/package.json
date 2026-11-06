@@ -1,7 +1,7 @@
 {
   "name": "@goodjob/local-runner",
   "version": "0.1.0",
-  "description": "GoodJob CRM local execution bridge",
+  "description": "普禾业务 local execution bridge",
   "license": "Apache-2.0",
   "type": "module",
   "bin": {

@@ -2822,7 +2822,7 @@ export function createOpenApiDocument(app: Application) {
   return {
     openapi: "3.0.3",
     info: {
-      title: "GoodJob CRM API",
+      title: "普禾业务 API",
       version: "1.0.0",
       description: [
         "部署调试文档，仅管理员和超级管理员可访问。",
@@ -3154,7 +3154,7 @@ function requireApiDocsAdmin(req: Request, res: Response, next: NextFunction) {
 }
 
 const swaggerOptions = {
-  customSiteTitle: "GoodJob CRM API 调试",
+  customSiteTitle: "普禾业务 API 调试",
   customRobots: "noindex,nofollow",
   customCss: [
     ".swagger-ui .topbar { display: none; }",

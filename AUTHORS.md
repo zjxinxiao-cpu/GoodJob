@@ -13,3 +13,9 @@ history before publishing a redistributed version.
 Third-party projects retain their own copyright and attribution. In
 particular, the WhatsApp-related dependencies are authored and maintained by
 their upstream projects, as listed in `THIRD_PARTY_NOTICES.md`.
+
+## 普禾业务
+
+This fork is operated as 普禾业务. Product owner: Annie (Laomu).
+The GoodJob CRM copyright notice and Apache-2.0 terms above still apply to
+the upstream core. Do not remove that upstream credit.

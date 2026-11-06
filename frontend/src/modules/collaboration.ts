@@ -357,7 +357,7 @@ export function buildDailyDraft(dateStr: string): DailyDraft {
     return `<div class="dy-bar"><span class="dy-bar-label">${LOG_CATEGORY_LABEL[c]}</span><span class="dy-bar-track"><i style="width:${pct}%"></i></span><span class="dy-bar-val">${v}</span></div>`;
   }).join("");
 
-  const markdown = `# GoodJob CRM 每日经营日报（${dateStr}）
+  const markdown = `# 普禾业务 每日经营日报（${dateStr}）
 
 ## 今日完成工作
 ${completedWork}

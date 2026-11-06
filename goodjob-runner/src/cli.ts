@@ -19,7 +19,7 @@ function values(args: string[], name: string) {
 const value = (args: string[], name: string) => values(args, name).at(-1) || "";
 
 function usage() {
-  console.log(`GoodJob Local Runner ${RUNNER_VERSION}
+  console.log(`普禾 Local Runner ${RUNNER_VERSION}
 
 用法：
   goodjob-runner pair --server <CRM地址> --code <配对码> --workspace <绝对路径> [--workspace <路径>]
@@ -101,7 +101,7 @@ async function main() {
     const stop = () => controller.abort();
     process.once("SIGINT", stop);
     process.once("SIGTERM", stop);
-    console.log(`GoodJob Runner 已连接 ${config.serverUrl}，等待任务...`);
+    console.log(`普禾 Runner 已连接 ${config.serverUrl}，等待任务...`);
     await startRunner(config, controller.signal);
     return;
   }

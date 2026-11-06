@@ -297,7 +297,7 @@ async function removeSenderMailbox(id: string) {
 }
 
 function collectDevelopmentEmailDraft() {
-  const sender = qs<HTMLInputElement>("#profileSenderName")?.value.trim() || state.user?.name || "GoodJob Sales";
+  const sender = qs<HTMLInputElement>("#profileSenderName")?.value.trim() || state.user?.name || "普禾业务";
   const from = qs<HTMLInputElement>("#profileOutboundEmail")?.value.trim() || state.user?.outboundEmail || "";
   const signature = qs<HTMLTextAreaElement>("#profileEmailSignature")?.value.trim() || "";
   return {

@@ -1,6 +1,6 @@
-# GoodJob Local Runner
+# 普禾 Local Runner
 
-GoodJob Local Runner 由本机主动连接 CRM，领取结构化 Codex 任务并把进度和结果回传到网页。它不会开放本机端口，也不接受任意 Shell 命令。
+普禾 Local Runner 由本机主动连接 CRM，领取结构化 Codex 任务并把进度和结果回传到网页。它不会开放本机端口，也不接受任意 Shell 命令。命令名仍是 `goodjob-runner`。
 
 ```bash
 npm install

@@ -143,7 +143,7 @@ export function mountPlanet(planetView: HTMLElement, opts: PlanetMountOptions) {
   const haloGeo = new THREE.SphereGeometry(2.1, 48, 48);
   const haloMat = new THREE.MeshBasicMaterial({ color: 0x7F77DD, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending });
   root.add(new THREE.Mesh(haloGeo, haloMat));
-  const coreLabel = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabelTexture("GoodJob", 0xAFA9EC), transparent: true }));
+  const coreLabel = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabelTexture("普禾", 0xAFA9EC), transparent: true }));
   coreLabel.scale.set(3, 0.75, 1);
   coreLabel.position.set(0, -2.6, 0);
   root.add(coreLabel);

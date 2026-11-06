@@ -153,7 +153,7 @@ export function codexProfileArgs(profile: CodexCliProfile): { config: string[]; 
 
 function taskPrompt(prompt: string, browserMcpUrl = "") {
   if (!browserMcpUrl) return prompt;
-  return `本次任务已连接 GoodJob 独立受控浏览器 MCP，服务名为 goodjob_browser。
+  return `本次任务已连接普禾独立受控浏览器 MCP，服务名为 goodjob_browser。
 遇到打开网页、搜索、点击、输入、读取页面或保持页面打开等浏览器任务时，必须使用 goodjob_browser 提供的 Playwright 工具完成实际操作。
 不要改用 browser@openai-bundled、chrome@openai-bundled、node_repl 或浏览器扩展。用户所说的“打开 Chrome/浏览器”默认指这个独立受控浏览器，除非用户明确要求操作其个人浏览器。
 非浏览器任务不需要调用该工具。任务完成后不要主动关闭用户要求保留的页面。
