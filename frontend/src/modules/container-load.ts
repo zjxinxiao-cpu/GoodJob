@@ -918,7 +918,7 @@ function exportContainerLoad() {
       <tr><th>配重校验 · 偏载</th><td>前后偏移 ${txt("clCgLong")} · 左右偏移 ${txt("clCgLat")} · 重心高度 ${txt("clCgHeight")} <span class="xp-badge ${balanceWarn()}">${badgeText("clBalanceBadge")}</span></td></tr>
     </table>
     ${snap}
-    <div class="xp-foot">本方案由 GoodJob CRM 装箱计算模块生成，理论最大值按同向整齐码放估算，实际装柜请预留 10–15% 安全余量（间隙、加固、不规则形状）。重量以「单件重量×件数」核对集装箱最大载货重；配重按贴角码放估算重心。</div>
+    <div class="xp-foot">本方案由普禾业务装箱计算模块生成，理论最大值按同向整齐码放估算，实际装柜请预留 10–15% 安全余量（间隙、加固、不规则形状）。重量以「单件重量×件数」核对集装箱最大载货重；配重按贴角码放估算重心。</div>
   </body></html>`;
 
   const w = window.open("", "_blank", "width=900,height=1000");

@@ -199,12 +199,12 @@ export async function loadProductConfig() {
     const response = await fetch("/product-config.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const config = await response.json() as { productName?: string; version?: string };
-    const productName = String(config.productName || "GoodJob CRM").trim();
+    const productName = String(config.productName || "普禾业务").trim();
     const version = String(config.version || "").trim();
     if (versionNode) versionNode.textContent = version ? `${productName} · 版本 ${version}` : productName;
     if (version) document.title = `${productName} ${version} · 外贸客户管理系统`;
   } catch {
-    if (versionNode) versionNode.textContent = "GoodJob CRM";
+    if (versionNode) versionNode.textContent = "普禾业务";
   }
 }
 
@@ -349,10 +349,10 @@ let pendingUpdateCredits: string | null = null;
 
 // 默认鸣谢内容 (编译进 JS, 永远存在, 不会被更新覆盖)
 const DEFAULT_CREDITS = `<div style="text-align:center;margin-bottom:16px;">
-  <div style="font-size:18px;font-weight:600;color:var(--accent,#3157d5);margin-bottom:4px;">GoodJob CRM</div>
+  <div style="font-size:18px;font-weight:600;color:var(--accent,#3157d5);margin-bottom:4px;">普禾业务</div>
   <div style="font-size:12px;color:var(--text-2,#999);">外贸客户关系管理系统</div>
 </div>
-<p style="margin-bottom:12px;">感谢您使用 GoodJob CRM，即将开始更新。本软件在开发过程中使用了以下开源项目，在此表示感谢：</p>
+<p style="margin-bottom:12px;">感谢您使用普禾业务，即将开始更新。本软件在开发过程中使用了以下开源项目，在此表示感谢：</p>
 <div style="background:var(--surface-2,#f5f7fa);border-radius:8px;padding:12px 16px;margin-bottom:12px;">
   <div style="font-weight:600;margin-bottom:8px;font-size:13px;">开源依赖</div>
   <div style="font-size:12px;line-height:2;color:var(--text-2,#666);">

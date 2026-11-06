@@ -744,7 +744,7 @@ async function exportCommission() {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, summarySheet, "人员月度汇总");
   XLSX.utils.book_append_sheet(workbook, detailSheet, "逐笔计提明细");
-  XLSX.writeFile(workbook, `GoodJob-提成对账-${state.commissionMonth}.xlsx`);
+  XLSX.writeFile(workbook, `普禾-提成对账-${state.commissionMonth}.xlsx`);
   toast(`已导出 ${result.exportJob.rows} 行提成对账数据`);
 }
 

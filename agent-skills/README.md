@@ -1,4 +1,4 @@
-# GoodJob CRM Agent Skills
+# 普禾业务 Agent Skills
 
 每个 Skill 使用独立目录保存：
 

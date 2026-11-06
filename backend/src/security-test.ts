@@ -434,7 +434,7 @@ try {
     headers: { authorization: `Bearer ${admin.json.token}` }
   });
   const docsInitScript = await docsInit.text();
-  if (!docsUi.ok || !docsHtml.includes("GoodJob CRM API 调试")
+  if (!docsUi.ok || !docsHtml.includes("普禾业务 API 调试")
     || !docsInit.ok || !docsInitScript.includes("X-CSRF-Token")) {
     throw new Error("Swagger UI or automatic CSRF interceptor missing");
   }

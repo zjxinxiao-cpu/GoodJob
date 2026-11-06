@@ -1522,7 +1522,7 @@ export function registerFilesRoutes(app: Express) {
       res.status(404).json({ message: "没有可打包的文件", skipped });
       return;
     }
-    const zipName = sanitizeOriginalName(parsed.data.name || `GoodJob-文件包-${new Date().toISOString().slice(0, 10)}.zip`);
+    const zipName = sanitizeOriginalName(parsed.data.name || `普禾-文件包-${new Date().toISOString().slice(0, 10)}.zip`);
     const finalName = zipName.toLowerCase().endsWith(".zip") ? zipName : `${zipName}.zip`;
     res.setHeader("Content-Type", "application/zip");
     res.setHeader("Content-Disposition", contentDisposition(finalName, false));
@@ -1644,7 +1644,7 @@ export function registerFilesRoutes(app: Express) {
   app.get("/api/share/:token", asyncRoute(async (req, res) => {
     const token = String(req.params.token || "").slice(0, 64);
     const target = await resolveShareTarget(token);
-    const common = { token, title: "文件分享 · GoodJob" };
+    const common = { token, title: "文件分享 · 普禾" };
     if (!target.ok) {
       res.status(target.status).type("html").send(sharePageHtml({
         ...common,
@@ -1661,7 +1661,7 @@ export function registerFilesRoutes(app: Express) {
     const unlocked = !target.share.passwordHash || shareCookieMatches(target.share, cookie);
     res.type("html").send(sharePageHtml({
       ...common,
-      title: `${target.file.originalName} · GoodJob`,
+      title: `${target.file.originalName} · 普禾`,
       watermark: target.share.watermarkText || buildWatermarkText({ token }),
       fileName: target.file.originalName,
       mime: target.file.mime,
@@ -1683,7 +1683,7 @@ export function registerFilesRoutes(app: Express) {
     if (!verifySharePassword(password, target.share.passwordHash)) {
       res.status(401).type("html").send(sharePageHtml({
         token,
-        title: "需要密码 · GoodJob",
+        title: "需要密码 · 普禾",
         watermark: "",
         fileName: "",
         mime: "",

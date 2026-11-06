@@ -26,7 +26,7 @@ function renderExecutiveReport(report: ExecutiveReport) {
     if (node) node.innerHTML = value;
   };
   setText("#reportPeriod", `${report.title} · ${report.period.label}`);
-  setText("#reportGeneratedAt", `GoodJob CRM · 生成于 ${generatedText}`);
+  setText("#reportGeneratedAt", `普禾业务 · 生成于 ${generatedText}`);
   setText("#reportHeadline", report.headline);
   setText("#reportHeroNote", state.reportNote || report.note);
   setText("#reportScope", `范围：${report.scope.label}`);
@@ -156,7 +156,7 @@ export async function exportReport() {
   const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "GoodJob-CRM-经营汇报.txt";
+  link.download = "普禾业务-经营汇报.txt";
   link.click();
   URL.revokeObjectURL(link.href);
   toast("汇报已生成下载");

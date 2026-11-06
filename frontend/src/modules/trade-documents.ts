@@ -3595,7 +3595,7 @@ export async function exportCustomers() {
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "客户清单");
-    XLSX.writeFile(workbook, `GoodJob客户清单-${Date.now()}.xlsx`);
+    XLSX.writeFile(workbook, `普禾客户清单-${Date.now()}.xlsx`);
     state.jobs.unshift(result.job);
     renderJobs(state.jobs);
     toast(`客户已导出：${rows.length} 行`);
@@ -3608,6 +3608,6 @@ export function downloadCustomerTemplate() {
   const worksheet = XLSX.utils.aoa_to_sheet([["客户ID", "公司简称", "公司全名", "国家", "联系人", "电话", "邮箱", "联系方式备注（其它渠道）", "官网", "客户来源", "成交状态", "阶段", "预计金额", "健康度", "下一提醒"]]);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "客户导入模板");
-  XLSX.writeFile(workbook, "GoodJob客户导入模板.xlsx");
+  XLSX.writeFile(workbook, "普禾客户导入模板.xlsx");
   toast("客户导入模板已下载");
 }

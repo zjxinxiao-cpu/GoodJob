@@ -614,7 +614,7 @@ function zipSelectedFiles() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `GoodJob-文件包-${new Date().toISOString().slice(0, 10)}.zip`;
+      link.download = `普禾-文件包-${new Date().toISOString().slice(0, 10)}.zip`;
       document.body.append(link);
       link.click();
       link.remove();
@@ -730,7 +730,7 @@ async function openStorageSettingsModal() {
 }
 
 export async function openFileShareModal(fileId: string) {
-  const defaultWatermark = `GoodJob · ${new Date().toISOString().slice(0, 10)}`;
+  const defaultWatermark = `普禾 · ${new Date().toISOString().slice(0, 10)}`;
   openModal(
     "分享文件",
     `<div class="form-field"><label>查看方式</label>

@@ -106,7 +106,7 @@ check("水印文字含日期与可追溯编号", () => {
   // 客户名过长要截断，否则水印铺出去会盖满整页
   assert.ok(buildWatermarkText({ customerName: "长".repeat(80), token: "t" }).length <= 40);
   // 什么都不知道时也要有兜底，不能是空串
-  assert.ok(buildWatermarkText({}).includes("GoodJob"));
+  assert.ok(buildWatermarkText({}).includes("普禾"));
 });
 
 check("分享页：拦截/密码/预览/下载四种形态", () => {
@@ -174,7 +174,7 @@ check("没有中文字形时降级成 ASCII，不让下载整条链路 500", () 
   assert.match(fallback, /2026-10-28/u);
   assert.match(fallback, /abcdef/u);
   // 整段中文剥完什么都不剩时，必须给一个能画出来的非空串
-  assert.equal(asciiWatermarkFallback("上海朋绎机械"), "GoodJob");
+  assert.equal(asciiWatermarkFallback("上海朋绎机械"), "Puhe");
 });
 
 check("TTC 集合拆包：重写 table 偏移，直接切片会得到坏字体", () => {

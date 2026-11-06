@@ -850,7 +850,7 @@ export async function exportQuestionBank() {
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "基础题库");
-    XLSX.writeFile(workbook, `GoodJob基础题库-${Date.now()}.xlsx`);
+    XLSX.writeFile(workbook, `普禾基础题库-${Date.now()}.xlsx`);
     toast(`题库已导出：${rows.length} 道题`);
   } catch (error) {
     toast(error instanceof Error ? error.message : "题库导出失败", "error");

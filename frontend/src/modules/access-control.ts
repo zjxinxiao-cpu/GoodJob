@@ -1071,7 +1071,7 @@ async function deleteAccount(id: string, button?: HTMLButtonElement) {
   }
   if (!await confirmAction({
     title: "删除成员账号",
-    message: "该成员将无法继续登录 GoodJob CRM。",
+    message: "该成员将无法继续登录普禾业务。",
     detail: `${account.name}（${account.email}）`,
     detailLabel: "成员账号",
     consequences: ["账号权限会立即失效", "该成员名下的业务数据不会随账号删除"],

@@ -421,7 +421,7 @@ export function launchCustomerContact(customer: Customer, channel: "email" | "ph
       openCustomerModal(customer);
       return;
     }
-    window.location.href = `mailto:${contacts.email}?subject=${encodeURIComponent(`GoodJob CRM · ${customer.company}`)}`;
+    window.location.href = `mailto:${contacts.email}?subject=${encodeURIComponent(`普禾业务 · ${customer.company}`)}`;
     return;
   }
   if (channel === "phone") {

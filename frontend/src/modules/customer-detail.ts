@@ -81,7 +81,7 @@ function launchContactDockChannel(subject: ContactDockSubject, channel: ContactD
     return;
   }
   if (channel === "email") {
-    window.location.href = `mailto:${value}?subject=${encodeURIComponent(`GoodJob CRM · ${subject.name}`)}`;
+    window.location.href = `mailto:${value}?subject=${encodeURIComponent(`普禾业务 · ${subject.name}`)}`;
     return;
   }
   if (channel === "phone") {
@@ -513,7 +513,7 @@ async function createCustomerCommunicationTodo(customer: Customer, followup: Wha
     });
     if (!state.todos.some((todo) => todo.id === result.todo.id)) state.todos.unshift(result.todo);
     button.textContent = "已加入待办";
-    toast("已加入 GoodJob 待办");
+    toast("已加入 普禾待办");
   } catch (error) {
     button.disabled = false;
     button.textContent = "转为待办";
@@ -553,13 +553,13 @@ async function loadCustomerCommunicationInsights(customer: Customer) {
         <div><h3>客户特点</h3><div class="communication-traits">${analysis.traits.length ? analysis.traits.map((trait) => `<span><b>${escapeHtml(trait.label)}</b><small>${escapeHtml(trait.value || "已识别")} · ${Math.round(trait.confidence * 100)}% 可信 · ${trait.evidenceMessageIds.length} 条证据</small></span>`).join("") : `<span class="is-empty">当前会话证据不足</span>`}</div></div>
         <div><h3>关键决策信号</h3><div class="communication-points">${analysis.keyPoints.length ? analysis.keyPoints.map((point) => `<span><i>✓</i>${escapeHtml(point)}</span>`).join("") : `<span>尚未提取到明确采购信号</span>`}</div></div>
       </div>` : `<div class="communication-insight-empty"><b>客户画像正在等待首次分析</b><span>周期分析任务会自动生成客户特点、风险和跟进建议。</span></div>`}
-      <div class="communication-followup-block"><div class="communication-block-head"><div><h3>最近要跟进的事项</h3><p>即刻沟通建议与 GoodJob 待办统一呈现</p></div><b>${pending.length + unmatchedLinkedTodos.length}</b></div><div class="communication-followups">
+      <div class="communication-followup-block"><div class="communication-block-head"><div><h3>最近要跟进的事项</h3><p>即刻沟通建议与 普禾待办统一呈现</p></div><b>${pending.length + unmatchedLinkedTodos.length}</b></div><div class="communication-followups">
         ${pending.map((item) => {
           const linkedTodo = relatedTodos.find((todo) => todoMatchesCommunicationFollowup(todo, customer, item));
           const buttonLabel = linkedTodo ? (linkedTodo.done ? "待办已完成" : "已加入待办") : "转为待办";
-          return `<article class="priority-${item.priority}${linkedTodo ? " is-crm-todo" : ""}"><i></i><div><b>${escapeHtml(item.title)}</b><span>${escapeHtml(communicationDueLabel(item.dueAt))}</span><p>${escapeHtml(linkedTodo ? (linkedTodo.done ? "关联待办已完成" : "已进入 GoodJob 待办") : item.reason)}</p></div><button class="btn" type="button" data-communication-todo="${escapeHtml(item.id)}"${linkedTodo ? " disabled" : ""}>${buttonLabel}</button></article>`;
+          return `<article class="priority-${item.priority}${linkedTodo ? " is-crm-todo" : ""}"><i></i><div><b>${escapeHtml(item.title)}</b><span>${escapeHtml(communicationDueLabel(item.dueAt))}</span><p>${escapeHtml(linkedTodo ? (linkedTodo.done ? "关联待办已完成" : "已进入 普禾待办") : item.reason)}</p></div><button class="btn" type="button" data-communication-todo="${escapeHtml(item.id)}"${linkedTodo ? " disabled" : ""}>${buttonLabel}</button></article>`;
         }).join("")}
-        ${unmatchedLinkedTodos.slice(0, 4).map((todo) => `<article class="is-crm-todo"><i></i><div><b>${escapeHtml(todo.title)}</b><span>${escapeHtml(communicationDueLabel(todo.dueAt))}</span><p>已进入 GoodJob 待办</p></div><em>CRM</em></article>`).join("")}
+        ${unmatchedLinkedTodos.slice(0, 4).map((todo) => `<article class="is-crm-todo"><i></i><div><b>${escapeHtml(todo.title)}</b><span>${escapeHtml(communicationDueLabel(todo.dueAt))}</span><p>已进入 普禾待办</p></div><em>CRM</em></article>`).join("")}
         ${pending.length + unmatchedLinkedTodos.length === 0 ? `<div class="communication-insight-empty compact"><b>暂无未完成事项</b><span>新消息完成分析后，行动建议会自动出现。</span></div>` : ""}
       </div></div>`;
     qsa<HTMLButtonElement>("[data-communication-todo]", box).forEach((button) => {
@@ -868,7 +868,7 @@ async function createCustomerMeetingTodo(customer: Customer, activityId: string,
     }
     updateTodoChips(state.todos);
     renderTopbarStats();
-    toast("会前准备已加入 GoodJob 待办");
+    toast("会前准备已加入 普禾待办");
   } catch (error) {
     setButtonPending(button, false, "生成会前待办", "创建中");
     toast(error instanceof Error ? error.message : "会前待办创建失败", "error");

@@ -437,7 +437,7 @@ try {
   const directPackage = packageText(directFiles);
   assert.match(directPackage, /GoodJobLetterheadLogo/u, "an export without a configured logo must use the GoodJob default logo");
   assert.doesNotMatch(directPackage, /ProtoTech|Spreadsheet123|huawei|VNN\.R9/iu, "default export metadata and XML must be brand-safe");
-  assert.match(strFromU8(directFiles["docProps/core.xml"]), /GoodJob CRM/u, "export metadata must identify GoodJob CRM");
+  assert.match(strFromU8(directFiles["docProps/core.xml"]), /普禾业务/u, "export metadata must identify 普禾业务");
 
   const snapshotExport = await request(`/api/trade-documents/${snapshotImageDocument.id}/export-xlsx`, admin, {
     method: "POST",

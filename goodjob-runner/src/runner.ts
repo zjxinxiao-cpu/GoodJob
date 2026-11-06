@@ -351,8 +351,8 @@ export async function startRunner(config: RunnerConfig, signal: AbortSignal) {
     const started = await tryStartBrowserService();
     browserService = started.service;
     browserError = started.error;
-    if (browserService) console.log(`[GoodJob Runner] 独立浏览器已就绪：${browserService.configuration.url}`);
-    else console.error(`[GoodJob Runner] 独立浏览器不可用，Runner 继续运行（浏览器类任务会缺少受控浏览器）：${browserError}`);
+    if (browserService) console.log(`[普禾 Runner] 独立浏览器已就绪：${browserService.configuration.url}`);
+    else console.error(`[普禾 Runner] 独立浏览器不可用，Runner 继续运行（浏览器类任务会缺少受控浏览器）：${browserError}`);
   }
   let lastHeartbeat = 0;
   let lastBrowserHealth = 0;
@@ -369,7 +369,7 @@ export async function startRunner(config: RunnerConfig, signal: AbortSignal) {
           browserError = "独立浏览器服务已停止";
           await browserService.stop().catch(() => undefined);
           browserService = null;
-          console.error("[GoodJob Runner] 独立浏览器已停止，Runner 继续运行（浏览器类任务会缺少受控浏览器）");
+          console.error("[普禾 Runner] 独立浏览器已停止，Runner 继续运行（浏览器类任务会缺少受控浏览器）");
         } else {
           lastBrowserHealth = Date.now();
         }
@@ -390,7 +390,7 @@ export async function startRunner(config: RunnerConfig, signal: AbortSignal) {
       } catch (error) {
         failures += 1;
         const message = error instanceof Error ? error.message : "Runner 请求失败";
-        if (failures === 1 || failures % 10 === 0) console.error(`[GoodJob Runner] ${message}`);
+        if (failures === 1 || failures % 10 === 0) console.error(`[普禾 Runner] ${message}`);
         await sleep(Math.min(15_000, 1_000 * failures));
       }
     }
