@@ -178,7 +178,7 @@ export class MysqlLocalRunnerRepository implements LocalRunnerRepository {
     return transaction(this.pool, async (connection) => {
       const [rows] = await connection.query<PairingRow[]>(
         `SELECT * FROM integration_local_runner_pairings
-         WHERE code_hash=? AND consumed_at IS NULL AND expires_at>NOW(3) LIMIT 1 FOR UPDATE`,
+         WHERE code_hash=? AND consumed_at IS NULL AND expires_at>UTC_TIMESTAMP(3) LIMIT 1 FOR UPDATE`,
         [input.codeHash]
       );
       const pairing = rows[0];
@@ -317,7 +317,7 @@ export class MysqlLocalRunnerRepository implements LocalRunnerRepository {
            lease_hash='',lease_expires_at=NULL,
            queued_at=IF(attempt_count<2,NOW(3),queued_at),
            finished_at=IF(attempt_count<2,NULL,NOW(3)),updated_at=NOW(3)
-       WHERE task_status IN ('running','cancelling') AND lease_expires_at<NOW(3)${runnerId ? " AND runner_id=?" : ""}`,
+       WHERE task_status IN ('running','cancelling') AND lease_expires_at<UTC_TIMESTAMP(3)${runnerId ? " AND runner_id=?" : ""}`,
       runnerId ? [runnerId] : []
     );
   }
